@@ -39,30 +39,24 @@ class Enigma
     create_offsets
     keys_and_offsets = [distribute_keys, create_offsets]
     shift_array = keys_and_offsets.transpose.map {|pair| pair.sum}
-    collection = {}
-    collection[:A] = shift_array[0]
-    collection[:B] = shift_array[1]
-    collection[:C] = shift_array[2]
-    collection[:D] = shift_array[3]
-    collection
   end
 
-  # def letter_encryption(message_string)
-  #   final_shift
-  #   character_set = ("a".."z").to_a << " "
-  #   #["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
-  #   expanded_message_array = message_string.chars
-  #   expanded_message_array.map do |character|
-  #     if character_set.include?(character)
-  #       loop do
-  #       final_shift.map do |num|
-  #
-  #         character_set.index(character)
-  #       end
-  #     end
-  #   end
-  #   #["t", "h", "i", "s", " ", "i", "s", " ", "s", "o", " ", "s", "e", "c", "r", "e", "t", " ", ".", ".", "e", "n", "d", ".", "."]
-  # end
+  def letter_encryption(message_string)
+    character_set = ("a".."z").to_a << " "
+    expanded_message_array = message_string.chars
+    x = expanded_message_array.map do |character|
+      shift_numbers = final_shift
+      location = character_set.index(character)
+      if character_set.include?(character)
+        new_letter = character_set[location - (27 - shift_numbers.first)] if shift_numbers.first < 27
+        new_letter = character_set[location - (shift_numbers.first - 27)] if shift_numbers.first > 27
+        shift_numbers.rotate!
+        new_letter
+      else
+        character
+      end
+    end
+  end
 
 
 

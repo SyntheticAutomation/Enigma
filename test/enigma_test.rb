@@ -26,11 +26,12 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_returns_final_shift
-    assert_equal ({:A => 21, :B => 32, :C => 36, :D => 49}), @e.final_shift
+    assert_equal [21, 32, 36, 49], @e.final_shift
   end
 
-  # def test_it_converts_shift_to_encryption
-  #   assert_equal 0, @e.letter_encryption
-  # end
+  def test_it_encrypts_characters
+    expected = ["n", "b", "c", "m", "u", "c", "m", "u", "m", "i", "u", "m", "z", "x", "l", "z", "n", "u", ".", ".", "z", "h", "y", ".", "."]
+    assert_equal expected, @e.letter_encryption(@my_message)
+  end
 
 end
