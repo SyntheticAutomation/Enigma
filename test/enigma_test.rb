@@ -34,4 +34,11 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, @output
   end
 
+  def test_still_encrypts_despite_one_argument
+    actual = @enigma.encrypt("hello world")[:date]
+    expected = @enigma.date
+    assert_equal expected, actual
+  end
+
+
 end

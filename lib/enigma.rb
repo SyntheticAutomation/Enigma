@@ -2,6 +2,7 @@ require 'date'
 
 class Enigma
 
+  attr_reader :date
 
   def initialize
     @key = ""
@@ -12,7 +13,8 @@ class Enigma
   end
 
   def encrypt(message_string, key = nil, date = nil)
-    @key << key
+    @key << key if key != nil
+    @key << ([*"1".."99999"].sample.rjust(0, "5")) if key == nil
     if date == nil
       date = Date.today
       formatted_date = date.strftime("%d%m%y")
@@ -59,16 +61,16 @@ class Enigma
       recognized = @set.include?(character)
       location = @set.index(character)
       rotated_shifts = final_shift.rotate(@rotations)
-      if recognized && rotated_shifts.first < 27
+      if recognized && rotated_shifts.first < @set.length
         rotate_once
-        index = location + rotated_shifts.first
-        new_letter = @set[index] if index < 27
-        new_letter = @set[index-27] if index > 27
+        position = location + rotated_shifts.first
+        new_letter = @set[position] if position < @set.length
+        new_letter = @set[position-@set.length] if position > @set.length
         @encrypted_message << new_letter
-      elsif recognized && rotated_shifts.first > 27
+      elsif recognized && rotated_shifts.first > @set.length
         rotate_once
-        @encrypted_message << @set[location - (27 - (rotated_shifts.first % 27))]
-      elsif recognized && rotated_shifts.first == 27
+        @encrypted_message << @set[location - (@set.length - (rotated_shifts.first % @set.length))]
+      elsif recognized && rotated_shifts.first == @set.length
         rotate_once
         @encrypted_message << @set[location]
       else
