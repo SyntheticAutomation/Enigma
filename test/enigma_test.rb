@@ -8,30 +8,30 @@ require './lib/enigma'
 class EnigmaTest < Minitest::Test
 
   def setup
-    @e = Enigma.new
-    @my_message = "this is so secret ..end.."
-    @output = @e.encrypt(@my_message, "12345", Date.today)
+    @enigma = Enigma.new
+    @my_message = "hello world"
+    @output = @enigma.encrypt(@my_message, "02715", "040895")
   end
 
   def test_it_exists
-    assert_instance_of Enigma, @e
+    assert_instance_of Enigma, @enigma
   end
 
   def test_it_creates_keys
-    assert_equal [12, 23, 34, 45], @e.distribute_keys
+    assert_equal ["02", "27", "71", "15"], @enigma.create_keys
   end
 
   def test_it_creates_offsets
-    assert_equal [9, 9, 2, 4], @e.create_offsets
+    assert_equal [1, 0, 2, 5], @enigma.create_offsets
   end
 
   def test_it_returns_final_shift
-    assert_equal [21, 32, 36, 49], @e.final_shift
+    assert_equal [3, 27, 73, 20], @enigma.final_shift
   end
 
-  def test_it_encrypts_characters
-    expected = ["n", "b", "c", "m", "u", "c", "m", "u", "m", "i", "u", "m", "z", "x", "l", "z", "n", "u", ".", ".", "z", "h", "y", ".", "."]
-    assert_equal expected, @e.letter_encryption(@my_message)
+  def test_encrypt_returns_all_three_arguments_correctly
+    expected = {encryption: "keder ohulw", key: "02715", date: "040895"}
+    assert_equal expected, @output
   end
 
 end
