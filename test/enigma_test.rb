@@ -41,8 +41,10 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_encrypts_despite_one_argument
-    expected = @enigma.encrypt("hello world")
-    refute_equal expected, @enigma.encrypt("hello world")[:encryption]
+    e = Enigma.new
+    expected = e.encrypt("hello world")
+    # require "pry"; binding.pry
+    refute_equal expected, e.encrypted_message
   end
 
 

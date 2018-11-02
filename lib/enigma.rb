@@ -2,7 +2,7 @@ require 'date'
 
 class Enigma
 
-  attr_reader :date
+  attr_reader :key, :date, :encrypted_message
 
   def initialize
     @key = ""
@@ -14,7 +14,7 @@ class Enigma
 
   def encrypt(message_string, key = nil, date = nil)
     @key << key if key != nil
-    @key << ([*"1".."99999"].sample.rjust(0, "5")) if key == nil
+    @key << [*"00001".."99999"].sample if key == nil
     if date == nil
       date = Date.today
       formatted_date = date.strftime("%d%m%y")
@@ -33,6 +33,7 @@ class Enigma
     b = @key.chars[1] + @key.chars[2]
     c = @key.chars[2] + @key.chars[3]
     d = @key.chars[3] + @key.chars[4]
+    require "pry"; binding.pry if nil
     [a, b, c, d]
   end
 
@@ -66,6 +67,7 @@ class Enigma
         position = location + rotated_shifts.first
         new_letter = @set[position] if position < @set.length
         new_letter = @set[position-@set.length] if position > @set.length
+        new_letter = @set[0] if position == @set.length
         @encrypted_message << new_letter
       elsif recognized && rotated_shifts.first > @set.length
         rotate_once
