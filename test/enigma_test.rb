@@ -58,4 +58,8 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, actual
   end
 
+  def test_decrypt_skips_and_still_returns_foreign_characters
+    @enigma.decrypt("!!_@", "02715", "040895")
+    assert @enigma.decrypted_message.include?("!!_@")
+  end
 end
