@@ -8,8 +8,6 @@ class EnigmaTest < Minitest::Test
 
   def setup
     @enigma = Enigma.new
-    @my_message = "hello world"
-    @output = @enigma.encrypt(@my_message, "02715", "040895")
   end
 
   def test_it_exists
@@ -17,20 +15,24 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_creates_keys
+    @enigma.encrypt("hello world", "02715", "040895")
     assert_equal ["02", "27", "71", "15"], @enigma.create_keys
   end
 
   def test_it_creates_offsets
+    @enigma.encrypt("hello world", "02715", "040895")
     assert_equal [1, 0, 2, 5], @enigma.create_offsets
   end
 
   def test_it_returns_final_shift
+    @enigma.encrypt("hello world", "02715", "040895")
     assert_equal [3, 27, 73, 20], @enigma.final_shift
   end
 
   def test_encrypt_returns_all_three_arguments_correctly
+    output = @enigma.encrypt("hello world", "02715", "040895")
     expected = {encryption: "keder ohulw", key: "02715", date: "040895"}
-    assert_equal expected, @output
+    assert_equal expected, output
   end
 
   def test_it_assigns_date_despite_one_argument
@@ -52,10 +54,11 @@ class EnigmaTest < Minitest::Test
     assert e.encrypted_message.include?("!!_@")
   end
 
-  # def test_it_decrypt_returns_all_three_arguments_correctly
-  #   e = Enigma.new
-  #   actual = e.decrypt("keder ohulw", "02715", "040895")
-  #   expected =
-
+  def test_it_decrypt_returns_all_three_arguments_correctly
+    e = Enigma.new
+    actual = e.decrypt("keder ohulw", "02715", "040895")
+    expected = {encryption: "hello world", key: "02715", date: "040895"}
+    assert_equal expected, actual
+  end
 
 end
