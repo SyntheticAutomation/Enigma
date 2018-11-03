@@ -73,7 +73,8 @@ class Enigma
   def letter_decryption(message)
     set = ("a".."z").to_a << " "
     rotations = 0
-    message.chars.each do |character|
+    message.class == String ? characters_array = message.chars : characters_array = message[:encryption].chars
+    characters_array.each do |character|
       recognized = set.include?(character)
       index = set.index(character)
       rotated_shifts = final_shift.rotate(rotations)
