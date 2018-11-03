@@ -32,5 +32,11 @@ class EncrypterTest < Minitest::Test
     refute_equal "hello world", actual
   end
 
+  def test_encrypt_skips_and_still_returns_foreign_characters
+    e = Enigma.new
+    actual = e.encrypt("!!_@", "02715", "040895")[:encryption]
+    assert_equal "!!_@", actual
+  end
+
 
 end
