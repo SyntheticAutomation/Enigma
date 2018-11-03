@@ -17,7 +17,7 @@ class Enigma
     create_keys
     create_offsets
     final_shift
-    {encryption: letter_encryption(message.downcase.chop), key: key, date: @date}
+    {encryption: letter_encryption(message.downcase.chomp), key: key, date: @date}
   end
 
   def create_keys
@@ -67,7 +67,7 @@ class Enigma
     create_keys
     create_offsets
     final_shift
-    {decryption: letter_decryption(message), key: key, date: @date}
+    {decryption: letter_decryption(message.downcase.chomp), key: key, date: @date}
   end
 
   def letter_decryption(message)
