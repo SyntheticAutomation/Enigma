@@ -9,7 +9,6 @@ class Enigma
     @date = ""
     @encrypted_message = ""
     @decrypted_message = ""
-    @set = ("a".."z").to_a << " "
   end
 
   def encrypt(message, key = [*"00001".."99999"].sample, date = Date.today)
@@ -46,13 +45,14 @@ class Enigma
   end
 
   def letter_encryption(message)
+    set = ("a".."z").to_a << " "
     rotations = 0
     message.chars.each do |character|
-      recognized = @set.include?(character)
-      location = @set.index(character)
+      recognized = set.include?(character)
+      index = set.index(character)
       rotated_shifts = final_shift.rotate(rotations)
       if recognized
-        @encrypted_message << (@set.rotate(rotated_shifts[0])[location])
+        @encrypted_message << (set.rotate(rotated_shifts[0])[index])
         rotations += 1
       else
         @encrypted_message << character
@@ -71,13 +71,14 @@ class Enigma
   end
 
   def letter_decryption(message)
+    set = ("a".."z").to_a << " "
     rotations = 0
     message.chars.each do |character|
-      recognized = @set.include?(character)
-      location = @set.index(character)
+      recognized = set.include?(character)
+      index = set.index(character)
       rotated_shifts = final_shift.rotate(rotations)
       if recognized
-      @decrypted_message << (@set.rotate(-1 * rotated_shifts[0])[location])
+      @decrypted_message << (set.rotate(-1 * rotated_shifts[0])[index])
         rotations += 1
       else
         @decrypted_message << character
