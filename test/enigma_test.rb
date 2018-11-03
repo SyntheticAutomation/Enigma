@@ -29,18 +29,6 @@ class EnigmaTest < Minitest::Test
     assert_equal [3, 27, 73, 20], @enigma.final_shift
   end
 
-  def test_it_tracks_rotations
-    e = Enigma.new
-    assert_equal 0, e.rotations
-    e.rotate_once
-    assert_equal 1, e.rotations
-    e.rotate_once
-    e.rotate_once
-    e.rotate_once
-    e.rotate_once
-    assert_equal 5, e.rotations
-  end
-
   def test_encrypt_returns_all_three_arguments_correctly
     expected = {encryption: "keder ohulw", key: "02715", date: "040895"}
     assert_equal expected, @output
