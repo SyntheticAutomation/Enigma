@@ -11,5 +11,11 @@ class EncrypterTest < Minitest::Test
     assert_instance_of Encrypter, encrypter
   end
 
+  def test_it_encrypts_despite_one_argument
+    encrypter = Encrypter.new
+    actual = encrypter.letter_encryption("hello world")
+    refute_equal "hello world", actual
+  end
+
 
 end

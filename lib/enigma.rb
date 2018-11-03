@@ -3,12 +3,11 @@ require './lib/encrypter'
 
 class Enigma
 
-  attr_reader :key, :date, :encrypted_message, :decrypted_message
+  attr_reader :key, :date, :decrypted_message
 
   def initialize
     @key = ""
     @date = ""
-    @encrypted_message = ""
     @decrypted_message = ""
   end
 
@@ -18,7 +17,9 @@ class Enigma
     create_keys
     create_offsets
     final_shift
-    {encryption: letter_encryption(message.downcase.chomp), key: key, date: @date}
+    encrypter = Encrypter.new
+    new_text = encrypter.letter_encryption(message.downcase.chomp)
+    {encryption: new_text, key: key, date: @date}
   end
 
   def create_keys
@@ -43,23 +44,6 @@ class Enigma
     keys_as_integers = create_keys.map {|key| key.to_i}
     keys_and_offsets = [keys_as_integers, create_offsets]
     keys_and_offsets.transpose.map {|pair| pair.sum}
-  end
-
-  def letter_encryption(message)
-    set = ("a".."z").to_a << " "
-    rotations = 0
-    message.chars.each do |character|
-      recognized = set.include?(character)
-      index = set.index(character)
-      rotated_shifts = final_shift.rotate(rotations)
-      if recognized
-        @encrypted_message << (set.rotate(rotated_shifts[0])[index])
-        rotations += 1
-      else
-        @encrypted_message << character
-      end
-    end
-    @encrypted_message
   end
 
   def decrypt(message, key, date = Date.today)
