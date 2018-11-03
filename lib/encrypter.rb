@@ -1,7 +1,14 @@
+require './lib/algorithm'
 
 class Encrypter
+  include Algorithm
 
-  def initialize
+  attr_reader :message, :key, :date
+
+  def initialize(message, key, date)
+    @message = message
+    @key = key
+    @date = (date == Date.today) ? (date.strftime("%d%m%y")) : date
     @encrypted_message = ""
   end
 
