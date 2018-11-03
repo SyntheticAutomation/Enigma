@@ -2,7 +2,7 @@ require 'date'
 
 class Enigma
 
-  attr_reader :key, :date, :encrypted_message
+  attr_reader :key, :date, :encrypted_message, :decrypted_message
 
   def initialize
     @key = ""
