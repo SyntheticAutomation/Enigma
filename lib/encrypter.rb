@@ -3,7 +3,7 @@ require './lib/algorithm'
 class Encrypter
   include Algorithm
 
-  attr_reader :message, :key, :date
+  attr_reader :message, :key, :date, :encrypted_message
 
   def initialize(message, key, date)
     @message = message
