@@ -46,5 +46,16 @@ class EnigmaTest < Minitest::Test
     refute_nil e.date
   end
 
+  def test_encrypt_skips_and_still_returns_foreign_characters
+    e = Enigma.new
+    e.encrypt("!!_@")
+    assert e.encrypted_message.include?("!!_@")
+  end
+
+  # def test_it_decrypt_returns_all_three_arguments_correctly
+  #   e = Enigma.new
+  #   actual = e.decrypt("keder ohulw", "02715", "040895")
+  #   expected =
+
 
 end
