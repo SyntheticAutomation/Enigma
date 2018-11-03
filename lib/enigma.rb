@@ -8,6 +8,7 @@ class Enigma
     @key = ""
     @date = ""
     @encrypted_message = ""
+    @decrypted_message = ""
     @set = ("a".."z").to_a << " "
   end
 
@@ -58,6 +59,31 @@ class Enigma
       end
     end
     @encrypted_message
+  end
+
+  def decrypt(message, key, date = Date.today)
+    @key << key
+    (date == Date.today) ? (@date << date.strftime("%d%m%y")) : (@date << date)
+    create_keys
+    create_offsets
+    final_shift
+    {encryption: letter_decryption(message), key: key, date: @date}
+  end
+
+  def letter_decryption(message)
+    rotations = 0
+    message.chars.each do |character|
+      recognized = @set.include?(character)
+      location = @set.index(character)
+      rotated_shifts = final_shift.rotate(rotations)
+      if recognized
+      @decrypted_message << (@set.rotate(-1 * rotated_shifts[0])[location])
+        rotations += 1
+      else
+        @decrypted_message << character
+      end
+    end
+      @decrypted_message
   end
 
 end
