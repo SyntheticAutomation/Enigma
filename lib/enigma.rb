@@ -11,13 +11,13 @@ class Enigma
     @set = ("a".."z").to_a << " "
   end
 
-  def encrypt(message_string, key = [*"00001".."99999"].sample, date = Date.today)
+  def encrypt(message, key = [*"00001".."99999"].sample, date = Date.today)
     @key << key
     (date == Date.today) ? (@date << date.strftime("%d%m%y")) : (@date << date)
     create_keys
     create_offsets
     final_shift
-    {encryption: letter_encryption(message_string), key: key, date: @date}
+    {encryption: letter_encryption(message), key: key, date: @date}
   end
 
   def create_keys
@@ -44,9 +44,9 @@ class Enigma
     keys_and_offsets.transpose.map {|pair| pair.sum}
   end
 
-  def letter_encryption(message_string)
+  def letter_encryption(message)
     rotations = 0
-    message_string.chars.each do |character|
+    message.chars.each do |character|
       recognized = @set.include?(character)
       location = @set.index(character)
       rotated_shifts = final_shift.rotate(rotations)
