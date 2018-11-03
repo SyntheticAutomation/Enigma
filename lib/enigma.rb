@@ -2,12 +2,11 @@ require 'date'
 
 class Enigma
 
-  attr_reader :key, :date, :rotations, :encrypted_message
+  attr_reader :key, :date, :encrypted_message
 
   def initialize
     @key = ""
     @date = ""
-    @rotations = 0
     @encrypted_message = ""
     @set = ("a".."z").to_a << " "
   end
@@ -50,34 +49,23 @@ class Enigma
     keys_and_offsets.transpose.map {|pair| pair.sum}
   end
 
-  def rotate_once
-    @rotations += 1
-  end
-
   def letter_encryption(message_string)
-    message_string.chars.map do |character|
+    rotations = 0
+    message_string.chars.each do |character|
       recognized = @set.include?(character)
       location = @set.index(character)
-      rotated_shifts = final_shift.rotate(@rotations)
-      if recognized && rotated_shifts.first < @set.count
-        rotate_once
-        position = location + rotated_shifts.first
-        new_letter = @set[position] if position < @set.count
-        new_letter = @set[position-@set.count] if position > @set.count
-        new_letter = @set[0] if position == @set.count
-        @encrypted_message << new_letter
-      elsif recognized && rotated_shifts.first > @set.count
-        rotate_once
-        @encrypted_message << @set[location - (@set.count - (rotated_shifts.first % @set.count))]
-      elsif recognized && rotated_shifts.first == @set.count
-        rotate_once
-        @encrypted_message << @set[location]
+      rotated_shifts = final_shift.rotate(rotations)
+      if recognized
+        @encrypted_message << (@set.rotate(rotated_shifts[0])[location])
+        rotations += 1
       else
         @encrypted_message << character
       end
     end
     @encrypted_message
   end
+
+
 
 
 
