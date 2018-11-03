@@ -13,11 +13,7 @@ class Enigma
 
   def encrypt(message_string, key = [*"00001".."99999"].sample, date = Date.today)
     @key << key
-    if date == Date.today
-      @date << date.strftime("%d%m%y")
-    else
-      @date << date
-    end
+    (date == Date.today) ? (@date << date.strftime("%d%m%y")) : (@date << date)
     create_keys
     create_offsets
     final_shift
