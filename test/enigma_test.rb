@@ -42,21 +42,18 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_encrypts_despite_one_argument
-    e = Enigma.new
-    e.encrypt("hello world")
-    refute_equal "hello world", e.encrypted_message
-    refute_nil e.date
+    @enigma.encrypt("hello world")
+    refute_equal "hello world", @enigma.encrypted_message
+    refute_nil @enigma.date
   end
 
   def test_encrypt_skips_and_still_returns_foreign_characters
-    e = Enigma.new
-    e.encrypt("!!_@")
-    assert e.encrypted_message.include?("!!_@")
+    @enigma.encrypt("!!_@")
+    assert @enigma.encrypted_message.include?("!!_@")
   end
 
   def test_it_decrypt_returns_all_three_arguments_correctly
-    e = Enigma.new
-    actual = e.decrypt("keder ohulw", "02715", "040895")
+    actual = @enigma.decrypt("keder ohulw", "02715", "040895")
     expected = {encryption: "hello world", key: "02715", date: "040895"}
     assert_equal expected, actual
   end
