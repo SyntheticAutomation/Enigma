@@ -12,13 +12,10 @@ class Enigma
     @set = ("a".."z").to_a << " "
   end
 
-  def encrypt(message_string, key = nil, date = nil)
-    @key << key if key != nil
-    @key << [*"00001".."99999"].sample if key == nil
-    if date == nil
-      date = Date.today
-      formatted_date = date.strftime("%d%m%y")
-      @date << formatted_date
+  def encrypt(message_string, key = [*"00001".."99999"].sample, date = Date.today)
+    @key << key
+    if date == Date.today
+      @date << date.strftime("%d%m%y")
     else
       @date << date
     end
@@ -62,17 +59,17 @@ class Enigma
       recognized = @set.include?(character)
       location = @set.index(character)
       rotated_shifts = final_shift.rotate(@rotations)
-      if recognized && rotated_shifts.first < @set.length
+      if recognized && rotated_shifts.first < @set.count
         rotate_once
         position = location + rotated_shifts.first
-        new_letter = @set[position] if position < @set.length
-        new_letter = @set[position-@set.length] if position > @set.length
-        new_letter = @set[0] if position == @set.length
+        new_letter = @set[position] if position < @set.count
+        new_letter = @set[position-@set.count] if position > @set.count
+        new_letter = @set[0] if position == @set.count
         @encrypted_message << new_letter
-      elsif recognized && rotated_shifts.first > @set.length
+      elsif recognized && rotated_shifts.first > @set.count
         rotate_once
-        @encrypted_message << @set[location - (@set.length - (rotated_shifts.first % @set.length))]
-      elsif recognized && rotated_shifts.first == @set.length
+        @encrypted_message << @set[location - (@set.count - (rotated_shifts.first % @set.count))]
+      elsif recognized && rotated_shifts.first == @set.count
         rotate_once
         @encrypted_message << @set[location]
       else
