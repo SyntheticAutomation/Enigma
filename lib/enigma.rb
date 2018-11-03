@@ -1,4 +1,5 @@
 require 'date'
+require './lib/encrypter'
 
 class Enigma
 
