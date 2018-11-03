@@ -42,8 +42,8 @@ class EnigmaTest < Minitest::Test
 
   def test_it_encrypts_despite_one_argument
     e = Enigma.new
-    expected = e.encrypt("hello world")
-    refute_equal expected, e.encrypted_message
+    e.encrypt("hello world")
+    refute_equal "hello world", e.encrypted_message
     refute_nil e.date
   end
 
