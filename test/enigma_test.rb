@@ -1,6 +1,5 @@
-require 'minitest/autorun'
+require './test/test_helper.rb'
 require 'date'
-require 'minitest/pride'
 require './lib/enigma'
 
 
