@@ -4,8 +4,6 @@ require './lib/enigma'
 require './lib/encrypter'
 require './lib/decrypter'
 
-
-
 class EnigmaTest < Minitest::Test
 
   def setup
@@ -20,13 +18,21 @@ class EnigmaTest < Minitest::Test
     output = @enigma.encrypt("hello world", "02715", "040895")
     expected = {encryption: "keder ohulw", key: "02715", date: "040895"}
     assert_equal expected, output
+    actual = @enigma.encrypt("HELLO WORLD", "02715", "040895")
+    assert_equal expected, actual
+    new_cipher = @enigma.encrypt("The money is safe", "12345", "031118")
+    new_result = {encryption: "nmnvgtw sernuxjaz", key: "12345", date: "031118"}
+    assert_equal new_result, new_cipher
   end
 
   def test_decrypt_returns_all_three_arguments_correctly
-    actual = @enigma.decrypt("keder ohulw", "02715", "040895")
+    output = @enigma.decrypt("keder ohulw", "02715", "040895")
     expected = {decryption: "hello world", key: "02715", date: "040895"}
+    assert_equal expected, output
+    actual = @enigma.decrypt("KEdEr OhULW", "02715", "040895")
     assert_equal expected, actual
+    new_cipher = @enigma.decrypt("nmnvgtw sernuxjaz", "12345", "031118")
+    new_result = {decryption: "the money is safe", key: "12345", date: "031118"}
+    assert_equal new_result, new_cipher
   end
-
-
 end
