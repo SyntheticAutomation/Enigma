@@ -43,6 +43,4 @@ class DecrypterTest < Minitest::Test
     actual = e.decrypt("!!_@", "02715", "040895")[:decryption]
     assert_equal "!!_@", actual
   end
-
-
 end
