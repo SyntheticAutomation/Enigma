@@ -24,5 +24,4 @@ class Decrypter
     end
       @decrypted_message
   end
-
 end
