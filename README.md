@@ -1,8 +1,11 @@
 # Enigma
 
 a basic Cryptography program
+
 Michael Clampett, for The Turing School of Software & Design
+
 Mod1 - Final Project (Independent)
+
 First week of November 2018
 
 
