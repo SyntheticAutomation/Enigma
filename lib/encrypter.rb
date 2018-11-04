@@ -8,7 +8,7 @@ class Encrypter
   def initialize(message, key, date)
     @message = message
     @key = key
-    @date = (date == Date.today) ? (date.strftime("%d%m%y")) : date
+    @date = date
     @encrypted_message = ""
   end
 
