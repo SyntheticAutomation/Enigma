@@ -19,12 +19,7 @@ class Encrypter
       recognized = set.include?(character)
       index = set.index(character)
       rotated_shifts = final_shift.rotate(rotations)
-      if recognized
-        @encrypted_message << (set.rotate(rotated_shifts[0])[index])
-        rotations += 1
-      else
-        @encrypted_message << character
-      end
+      recognized ? (@encrypted_message << (set.rotate(rotated_shifts[0])[index]); rotations += 1) : @encrypted_message << character
     end
     @encrypted_message
   end
