@@ -14,6 +14,18 @@ class EncrypterTest < Minitest::Test
     assert_instance_of Encrypter, @encrypter
   end
 
+  def test_it_has_message
+    assert_equal "hello world", @encrypter.message
+  end
+
+  def test_it_has_key
+    assert_equal "02715", @encrypter.key
+  end
+
+  def test_it_has_date
+    assert_equal "040895", @encrypter.date
+  end
+
   def test_it_creates_keys
     assert_equal ["02", "27", "71", "15"], @encrypter.create_keys
   end
@@ -37,6 +49,4 @@ class EncrypterTest < Minitest::Test
     actual = e.encrypt("!!_@", "02715", "040895")[:encryption]
     assert_equal "!!_@", actual
   end
-
-
 end
