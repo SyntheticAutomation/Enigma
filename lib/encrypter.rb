@@ -23,7 +23,4 @@ class Encrypter
     end
     @encrypted_message
   end
-
-
-
 end

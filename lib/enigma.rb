@@ -20,6 +20,4 @@ class Enigma
     new_text = decrypter.letter_decryption(encryption[:encryption].downcase.chomp) if encryption.class == Hash
     {decryption: new_text, key: key, date: date}
   end
-
-
 end

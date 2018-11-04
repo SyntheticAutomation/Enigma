@@ -25,7 +25,4 @@ module Algorithm
     keys_and_offsets = [keys_as_integers, create_offsets]
     keys_and_offsets.transpose.map {|pair| pair.sum}
   end
-
-
-
 end
