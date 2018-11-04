@@ -15,17 +15,12 @@ class Decrypter
   def letter_decryption(encryption)
     set = ("a".."z").to_a << " "
     rotations = 0
-    encryption.class == String ? characters_array = encryption.chars : characters_array = encryption[:encryption].chars
-    characters_array.each do |character|
+    encryption.chars.each do |character|
       recognized = set.include?(character)
       index = set.index(character)
       rotated_shifts = final_shift.rotate(rotations)
-      if recognized
-      @decrypted_message << (set.rotate(-1 * rotated_shifts[0])[index])
-        rotations += 1
-      else
-        @decrypted_message << character
-      end
+      (@decrypted_message << (set.rotate(-1 * rotated_shifts[0])[index]); rotations += 1) if recognized
+      (@decrypted_message << character) unless recognized
     end
       @decrypted_message
   end
