@@ -25,6 +25,13 @@ class EnigmaTest < Minitest::Test
     assert_equal new_result, new_cipher
   end
 
+  def test_it_still_encrypts_without_date
+    e = Enigma.new
+    actual = e.encrypt("hello world", "02715")
+    expected = Date.today.strftime("%d%m%y")
+    assert_equal expected, actual[:date]
+  end
+
   def test_decrypt_returns_all_three_arguments_correctly
     output = @enigma.decrypt("keder ohulw", "02715", "040895")
     expected = {decryption: "hello world", key: "02715", date: "040895"}
@@ -35,4 +42,5 @@ class EnigmaTest < Minitest::Test
     new_result = {decryption: "the money is safe", key: "12345", date: "031118"}
     assert_equal new_result, new_cipher
   end
+
 end
